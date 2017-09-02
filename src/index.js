@@ -138,6 +138,9 @@ export default class Waver {
     this._enabled = false;
     this._request = 0;
 
+    this._outputTypes.set('wv_audioDestination', AudioDestinationNode);
+    this._output.set('wv_audioDestination', context.destination);
+
     for (const key in compiled.outputTypes) {
       const name = compiled.outputTypes[key];
       const type = mapOutputType(name);

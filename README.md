@@ -15,8 +15,6 @@ npm install waver-js --save
 
 test.wv:
 ```text
-output destination oTarget;
-
 input media iSound;
 
 node pan nPan;
@@ -24,7 +22,7 @@ node gain nGain;
 
 param float pRange;
 
-iSound => nPan => nGain => oTarget;
+iSound => nPan => nGain => wv_audioDestination;
 
 nPan.pan {
   Math.sin(Math.PI * 0.5 * Date.now() * 0.001) * this.pRange
@@ -48,7 +46,6 @@ function startup(source) {
   const waver = createWaver(context, source);
   const soundSource = context.createMediaElementSource(sound);
 
-  waver.bindOutput('oTarget', context.destination);
   waver.bindInput('iSound', soundSource);
   waver.setParam('pRange', 0.65);
   waver.enabled = true;

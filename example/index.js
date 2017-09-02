@@ -5,7 +5,6 @@ function startup(source, sound) {
 
   var waver = Waver.createWaver(context, source);
 
-  waver.bindOutput('oTarget', context.destination);
   waver.bindInput('iSound', sound);
   waver.setParam('pRange', 0.65);
   waver.enabled = true;
