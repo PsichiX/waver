@@ -1,6 +1,6 @@
 {
   "name": "waver-js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Advanced audio processing engine (a.k.a. audio shaders)",
   "main": "bin/index.js",
   "scripts": {
