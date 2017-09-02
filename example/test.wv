@@ -1,6 +1,6 @@
 output destination oTarget;
 
-input media iSound;
+input buffer iSound;
 
 node pan nPan;
 node gain nGain;

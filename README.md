@@ -57,10 +57,6 @@ function startup(source) {
 }
 
 fetch('./test.wv')
-  .then(function(response) {
-    return response.text();
-  })
-  .then(function(source) {
-    startup(source);
-  });
+  .then(response => response.text())
+  .then(source => startup(source));
 ```

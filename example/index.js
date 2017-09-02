@@ -1,14 +1,12 @@
 var context = Waver.createAudioContext();
-var sound = document.getElementById("sound");
 
-function startup(source) {
-  sound.play();
+function startup(source, sound) {
+  sound.start();
 
   var waver = Waver.createWaver(context, source);
-  var soundSource = context.createMediaElementSource(sound);
 
   waver.bindOutput('oTarget', context.destination);
-  waver.bindInput('iSound', soundSource);
+  waver.bindInput('iSound', sound);
   waver.enabled = true;
 
   setInterval(function() {
@@ -24,7 +22,19 @@ function startup(source) {
   }, 10);
 }
 
-fetchText('./test.wv')
-  .then(function(source) {
-    startup(source);
+Promise.all([
+  fetchText('./test.wv'),
+  fetchBuffer('./test.mp3')
+    .then(function(buffer) {
+      return context.decodeAudioData(buffer);
+    })
+    .then(function(data) {
+      var sound = context.createBufferSource();
+
+      sound.buffer = data;
+      return sound;
+    })
+])
+  .then(function(assets) {
+    startup(assets[0], assets[1]);
   });
