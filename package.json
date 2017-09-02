@@ -1,6 +1,6 @@
 {
   "name": "waver-js",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Advanced audio processing engine (a.k.a. audio shaders)",
   "main": "bin/index.js",
   "scripts": {
@@ -23,9 +23,6 @@
     "url": "https://github.com/PsichiX/waver/issues"
   },
   "homepage": "https://github.com/PsichiX/waver#readme",
-  "files": [
-    "bin/index.js"
-  ],
   "dependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
