@@ -1,5 +1,11 @@
 # waver-js - JavaScript "shaders" for audio
 
+Contents:
+1. [Install](#install)
+0. [Usage](#usage)
+0. [API](#api)
+0. [Language rules](#language-rules)
+
 ## __Install:__
 ```bash
 npm install waver-js --save
