@@ -17,7 +17,7 @@ test.wv:
 ```text
 output destination oTarget;
 
-input buffer iSound;
+input media iSound;
 
 node pan nPan;
 node gain nGain;
