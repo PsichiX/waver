@@ -209,7 +209,7 @@ type: available types and their JavaScript mappings:
 
 ### Connection chain
 
-Nodes are connected in chains where all node names are separated by arrow (`=>` ).
+Nodes are connected in chains where all node names are separated by arrow (`=>`).
 
 __Example__
 ```text
