@@ -1,0 +1,39 @@
+{
+  "name": "waver",
+  "version": "1.0.0",
+  "description": "Advanced audio processing engine (a.k.a. audio shaders)",
+  "main": "bin/index.js",
+  "scripts": {
+    "build": "webpack -p",
+    "build-dev": "webpack",
+    "postinstall": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PsichiX/waver.git"
+  },
+  "keywords": [
+    "audio",
+    "processing",
+    "browser",
+    "es6"
+  ],
+  "author": "Patryk 'PsichiX' Budzynski <psichix@gmail.com> (http://psichix.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PsichiX/waver/issues"
+  },
+  "homepage": "https://github.com/PsichiX/waver#readme",
+  "files": [
+    "bin/index.js"
+  ],
+  "dependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-es2016": "^6.22.0",
+    "babel-preset-es2017": "^6.22.0",
+    "webpack": "^2.2.1"
+  }
+}

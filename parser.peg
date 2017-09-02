@@ -1,0 +1,85 @@
+{
+  const outputTypes = {};
+  const inputTypes = {};
+  const nodeTypes = {};
+  const paramTypes = {};
+  const chains = [];
+  const setup = [];
+
+  function parseChain(from, to) {
+      const result = [ from ];
+      to.map(item => result.push(item[3]))
+      return result;
+  }
+}
+
+Program
+  = Operation* { return {
+    outputTypes,
+    inputTypes,
+    nodeTypes,
+    paramTypes,
+    chains,
+    setup
+  } }
+
+Operation
+  = _ (Declaration / Chain / Setup) _ End _
+
+Chain
+  = from:Identifier to:(_ Connect _ to:Identifier)+ { chains.push(parseChain(from, to)); }
+
+Setup
+  = node:Identifier _ "." _ param:Identifier _ "=" _ value:Value { setup.push([ node, param, value ]) }
+
+Declaration
+  = DeclOutput
+  / DeclInput
+  / DeclNode
+  / DeclParam
+
+DeclOutput "output"
+  = Output __ type:Identifier __ id:Identifier { outputTypes[id] = type; }
+
+DeclInput "input"
+  = Input __ type:Identifier __ id:Identifier { inputTypes[id] = type; }
+
+DeclNode "node"
+  = Node __ type:Identifier __ id:Identifier param:(_ "(" _ Value _ ")")? { nodeTypes[id] = [ type, param && param[3] ]; }
+
+DeclParam "param"
+  = Param __ type:Identifier __ id:Identifier { paramTypes[id] = type; }
+
+Output
+  = "output"
+
+Input
+  = "input"
+
+Node
+  = "node"
+
+Param
+  = "param"
+
+Value "value"
+  = Float
+  / Identifier
+
+Identifier "identifier"
+  = _ [_a-zA-Z][_a-zA-Z0-9]* { return text(); }
+
+Float "float"
+  = _ "-"?[0-9]+("."[0-9]+)? { return parseFloat(text()); }
+
+Connect "connect"
+  = _ "=>" _
+
+End "end"
+  = (";"_)+
+
+__ "whitespace"
+  = [ \t\n\r]+
+
+_ "whitespace_any"
+  = [ \t\n\r]*
