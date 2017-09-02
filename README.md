@@ -1,12 +1,11 @@
-# waver-js
-## JavaScript "shaders" for audio
+# waver-js - JavaScript "shaders" for audio
 
-__Install:__
+## __Install:__
 ```bash
 npm install waver-js --save
 ```
 
-__Usage:__
+## __Usage:__
 
 test.wv:
 ```text
@@ -154,3 +153,77 @@ __`get/set Waver.enabled`__
 - value: boolean;
 
 Tell or change it's enabled state (if this waver is able to process).
+
+## Language Rules
+
+There are 3 types of operations:
+- Node/param declarations;
+- Connection chains;
+- Nodes setup/update;
+
+### Node/param declaration
+
+There are 4 declaration modes:
+- `output` - Tells about output node;
+- `input` - Tells about input node;
+- `node` - Tells about internal processing node;
+- `param` - Tells about manipulation parameter;
+
+__Example__
+```text
+output destination oTarget;
+input buffer iSound;
+node gain nGain;
+param float pVolume;
+```
+
+__`output`__ (`output <type> <name>;`)
+_It's used as last node in connection chain._
+type: available types and their WebAudio API mappings:
+- `destination`: [AudioDestinationNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioDestinationNode)
+- `stream`: [MediaStreamAudioDestinationNode](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamAudioDestinationNode)
+
+__`input`__ (`input <type> <name>;`)
+_It's used as first node in connection chain._
+type: available types and their WebAudio API mappings:
+- `buffer`: [AudioBufferSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode)
+- `constant`: [ConstantSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/ConstantSourceNode)
+- `media`: [MediaElementAudioSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/MediaElementAudioSourceNode)
+- `MediaStreamAudioSourceNode`: [ConstantSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamAudioSourceNode)
+
+__`node`__ (`node <type> <name> [(<param>)];`)
+_It's used as intermediate node in connection chain._
+_You can set initialization parameter in parenthesis after it's name._
+type: available types and their WebAudio API mappings:
+- `biquadFilter`: [BiquadFilterNode](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode) - Initialization parameter is a type name (`node biquadFilter nFilter(highpass);`)
+- `delay`: [DelayNode](https://developer.mozilla.org/en-US/docs/Web/API/DelayNode) - Initialization parameter is a delay value in seconds (`node delay nDelay(0.5);`)
+- `compressor`: [DynamicsCompressorNode](https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode)
+- `gain`: [GainNode](https://developer.mozilla.org/en-US/docs/Web/API/GainNode) - Initialization parameter is a gain value in factor units (`node gain nGain(0.5);`)
+- `oscillator`: [OscillatorNode](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode) - Initialization parameter is a type name (`node oscillator nOscillator(sine);`)
+- `pan`: [StereoPannerNode](https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode) - Initialization parameter is a pan value in [-1; 1] space (`node pan nPan(-1);`)
+
+__`param`__ (`param <type> <name>;`)
+_It's used as node manipulation parameter as a way to control nodes from outside of waver._
+_You can set initialization parameter in parenthesis after it's name._
+type: available types and their JavaScript mappings:
+- `float`: number
+
+### Connection chain
+
+Nodes are connected in chains where all node names are separated by arrow (`=>` ).
+
+__Example__
+```text
+iSound => nGain => nPan => oTarget;
+```
+
+### Node setup/update
+
+Here you assign expression to node properties (a-rate AudioParam or node property).
+For now the only expression available is value (number or param name). Other expressions, like arithmetics, will be added in next versions.
+
+__Example__
+```text
+nPan.pan = pPanning;
+nGain.gain = 0.5;
+```
