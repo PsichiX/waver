@@ -1,13 +1,12 @@
 var context = Waver.createAudioContext();
 
 function startup(source, sound) {
-  sound.start();
-
   var waver = Waver.createWaver(context, source);
 
   waver.bindInput('iSound', sound);
   waver.setParam('pRange', 0.65);
   waver.enabled = true;
+  waver.start();
 }
 
 Promise.all([

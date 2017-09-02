@@ -294,6 +294,30 @@ export default class Waver {
     this._param.set(id, value);
   }
 
+  start() {
+    if (!this._valid) {
+      throw new Error('Waver is not valid!');
+    }
+
+    for (const input of this._input.values()) {
+      if (!!input) {
+        input.start();
+      }
+    }
+  }
+
+  stop() {
+    if (!this._valid) {
+      throw new Error('Waver is not valid!');
+    }
+
+    for (const input of this._input.values()) {
+      if (!!input) {
+        input.stop();
+      }
+    }
+  }
+
   _process() {
     if (!this._valid) {
       throw new Error('Waver is not valid!');

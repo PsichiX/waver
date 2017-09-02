@@ -110,6 +110,18 @@ Apply given value to waver parameter.
 
 ------
 
+__`Waver.start()`__
+
+Start playing waver inputs.
+
+------
+
+__`Waver.stop()`__
+
+Stop playing waver inputs.
+
+------
+
 __`get Waver.valid`__
 - value: boolean;
 
