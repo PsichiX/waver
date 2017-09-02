@@ -11,6 +11,8 @@ function mapOutputType(type) {
     return AudioDestinationNode;
   } else if (type === 'stream') {
     return MediaStreamAudioDestinationNode;
+  } else if (type === 'audio') {
+    return AudioNode;
   }
 
   return null;
@@ -25,6 +27,8 @@ function mapInputType(type) {
     return MediaElementAudioSourceNode;
   } else if (type === 'stream') {
     return MediaStreamAudioSourceNode;
+  } else if (type === 'audio') {
+    return AudioNode;
   }
 
   return null;

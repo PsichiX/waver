@@ -178,6 +178,7 @@ _It's used as last node in connection chain._
 type: available types and their WebAudio API mappings:
 - `destination`: [AudioDestinationNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioDestinationNode)
 - `stream`: [MediaStreamAudioDestinationNode](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamAudioDestinationNode)
+- `audio`: [AudioNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode)
 
 __`input`__ (`input <type> <name>;`)
 _It's used as first node in connection chain._
@@ -186,6 +187,7 @@ type: available types and their WebAudio API mappings:
 - `constant`: [ConstantSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/ConstantSourceNode)
 - `media`: [MediaElementAudioSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/MediaElementAudioSourceNode)
 - `MediaStreamAudioSourceNode`: [ConstantSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamAudioSourceNode)
+- `audio`: [AudioNode](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode)
 
 __`node`__ (`node <type> <name> [(<param>)];`)
 _It's used as intermediate node in connection chain._
