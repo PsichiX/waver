@@ -334,6 +334,14 @@ export default class Waver {
       }
 
       return _param.get(value);
+    } else if (value instanceof Function) {
+      const params = {};
+
+      for (const [k, v] of _param) {
+        params[k] = v;
+      }
+
+      return value.call(params);
     }
 
     return value;

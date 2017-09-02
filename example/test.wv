@@ -5,10 +5,12 @@ input buffer iSound;
 node pan nPan;
 node gain nGain;
 
-param float pPanning;
-param float pVolume(1);
-
 iSound => nPan => nGain => oTarget;
 
-nPan.pan = pPanning;
-nGain.gain = pVolume;
+nPan.pan {
+  Math.sin(Math.PI * 0.5 * Date.now() * 0.001) * 0.65
+}
+
+nGain.gain {
+  ((Date.now() * 0.001) % 1.35) / 1.35
+}

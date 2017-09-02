@@ -11,6 +11,10 @@
       to.map(item => result.push(item[3]))
       return result;
   }
+
+  function evalLambda(body) {
+  	return new Function('return ' + body + ';');
+  }
 }
 
 Program
@@ -24,19 +28,19 @@ Program
   } }
 
 Operation
-  = _ (Declaration / Chain / Setup) _ End _
+  = _ (Declaration / Chain / Setup / Update) _
 
 Chain
-  = from:Identifier to:(_ Connect _ to:Identifier)+ { chains.push(parseChain(from, to)); }
+  = from:Identifier to:(_ Connect _ to:Identifier)+ _ End { chains.push(parseChain(from, to)); }
 
 Setup
-  = node:Identifier _ "." _ param:Identifier _ "=" _ value:Value { setup.push([ node, param, value ]) }
+  = node:Identifier _ "." _ param:Identifier _ "=" _ value:Value _ End { setup.push([ node, param, value ]) }
+
+Update
+  = node:Identifier _ "." _ param:Identifier _ value:Lambda { setup.push([ node, param, value ]) }
 
 Declaration
-  = DeclOutput
-  / DeclInput
-  / DeclNode
-  / DeclParam
+  = (DeclOutput / DeclInput / DeclNode / DeclParam) _ End
 
 DeclOutput "output"
   = Output __ type:Identifier __ id:Identifier { outputTypes[id] = type; }
@@ -48,7 +52,7 @@ DeclNode "node"
   = Node __ type:Identifier __ id:Identifier param:(_ "(" _ Value _ ")")? { nodeTypes[id] = [ type, param && param[3] ]; }
 
 DeclParam "param"
-  = Param __ type:Identifier __ id:Identifier { paramTypes[id] = type; }
+  = Param __ type:Identifier __ id:Identifier param:(_ "(" _ Value _ ")")? { paramTypes[id] = [ type, param && param[3] ]; }
 
 Output
   = "output"
@@ -72,11 +76,17 @@ Identifier "identifier"
 Float "float"
   = _ "-"?[0-9]+("."[0-9]+)? { return parseFloat(text()); }
 
+Lambda "lambda"
+  = _ "{" contents:Contents "}" { return evalLambda(contents.trim()); }
+
+Contents
+  = [^"}"]* { return text(); }
+
 Connect "connect"
   = _ "=>" _
 
-End "end"
-  = (";"_)+
+End "semicolon"
+  = _ (";"_)+
 
 __ "whitespace"
   = [ \t\n\r]+
