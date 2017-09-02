@@ -17,18 +17,22 @@ test.wv:
 ```text
 output destination oTarget;
 
-input media iSound;
+input buffer iSound;
 
 node pan nPan;
 node gain nGain;
 
-param float pPanning;
-param float pVolume(1);
+param float pRange;
 
 iSound => nPan => nGain => oTarget;
 
-nPan.pan = pPanning;
-nGain.gain = pVolume;
+nPan.pan {
+  Math.sin(Math.PI * 0.5 * Date.now() * 0.001) * this.pRange
+}
+
+nGain.gain {
+  ((Date.now() * 0.001) % 1.35) / 1.35
+}
 ```
 
 index.js:
@@ -46,19 +50,8 @@ function startup(source) {
 
   waver.bindOutput('oTarget', context.destination);
   waver.bindInput('iSound', soundSource);
+  waver.setParam('pRange', 0.65);
   waver.enabled = true;
-
-  setInterval(() => {
-    if (!waver.valid) {
-      return;
-    }
-
-    const panning = Math.sin(Math.PI * 0.5 * Date.now() * 0.001) * 0.65;
-    const volume = ((Date.now() * 0.001) % 1.35) / 1.35;
-
-    waver.setParam('pPanning', panning);
-    waver.setParam('pVolume', volume);
-  }, 10);
 }
 
 fetch('./test.wv')
@@ -225,11 +218,14 @@ iSound => nGain => nPan => oTarget;
 
 ### Node setup/update
 
-Here you assign expression to node properties (a-rate AudioParam or node property).
-For now the only expression available is value (number or param name). Other expressions, like arithmetics, will be added in next versions.
+Here you assign expression to node properties (a-rate AudioParam or node property) or declare JavaScript lambda to update it.
+When use lambda, you can access params by `this` context (`nPan { this.pPanning }`).
 
 __Example__
 ```text
 nPan.pan = pPanning;
 nGain.gain = 0.5;
+nPan2.pan {
+  Math.sin(Math.PI * 0.5 * Date.now() * 0.001) * this.pRange
+}
 ```
