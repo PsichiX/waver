@@ -1,8 +1,8 @@
 {
   "name": "waver-js",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Advanced audio processing engine (a.k.a. audio shaders)",
-  "main": "bin/index.js",
+  "main": "bin/waver.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack -p",
     "build-dev": "./node_modules/.bin/webpack"
