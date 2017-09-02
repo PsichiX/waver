@@ -211,6 +211,7 @@ export default class Waver {
     this.enabled = false;
 
     if (this._valid) {
+      this.stop();
       this._disconnect();
     }
 
@@ -300,7 +301,7 @@ export default class Waver {
     }
 
     for (const input of this._input.values()) {
-      if (!!input) {
+      if (!!input && !!input.start) {
         input.start();
       }
     }
@@ -312,7 +313,7 @@ export default class Waver {
     }
 
     for (const input of this._input.values()) {
-      if (!!input) {
+      if (!!input && !!input.stop) {
         input.stop();
       }
     }
