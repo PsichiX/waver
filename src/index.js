@@ -301,7 +301,7 @@ export default class Waver {
     }
 
     for (const input of this._input.values()) {
-      if (!!input && !!input.start) {
+      if (!!input && input.start instanceof Function) {
         input.start();
       }
     }
@@ -313,7 +313,7 @@ export default class Waver {
     }
 
     for (const input of this._input.values()) {
-      if (!!input && !!input.stop) {
+      if (!!input && input.stop instanceof Function) {
         input.stop();
       }
     }

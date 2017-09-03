@@ -18,8 +18,7 @@ var config = {
     filename: 'waver.js',
     library: 'Waver',
     libraryTarget: 'umd'
-  },
-  devtool: 'source-map'
+  }
 };
 
 module.exports = config;
